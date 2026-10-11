@@ -89,6 +89,50 @@ The following screenshots illustrate the **original R0 baseline**, not the optim
 
 </details>
 
+
+### Basis for the loading and deflection target
+
+The **40 N** load was selected as an illustrative **2g-equivalent loading case for a nominal 20 N motor/attachment weight**: `2 × 20 N = 40 N`. A 20 N weight corresponds to a mass of about **2.04 kg** under standard gravity. These are *study assumptions*, not verified motor specifications, measured vibration/acceleration loads or a dynamic analysis.
+
+The maximum **0.5 mm** total-deflection criterion was selected as an internal stiffness target to make mass-versus-deformation comparisons possible. It was **not** taken from a motor manufacturer's alignment tolerance or a design standard.
+
+### Analytical sanity check - rectangular cantilever approximation
+
+Before relying on the parametric FEA results, I carried out a hand calculation based on a **120 mm wide**, constant-thickness rectangular beam, with an assumed **80 mm effective cantilever span** and a rigidly fixed root. The beam estimate is intentionally simplified: it does not include the upright leg bending, the bend fillet, the mounting holes, remote-force distribution or the finite flexibility introduced by the mounting geometry.
+
+For rectangular width `b` and thickness `t`, the two centroidal second moments of area are:
+
+```text
+I_strong = t b³ / 12            I_weak = b t³ / 12
+```
+
+The labels `Ixx` and `Iyy` depend on how the local coordinate axes are assigned. **Vertical bending of the horizontal leg uses the weak-axis value**, with `b = 120 mm`.
+
+For the original **4 mm** section:
+
+```text
+I_strong = 4(120³)/12 = 576,000 mm⁴
+I_weak   = 120(4³)/12 = 640 mm⁴
+```
+
+With `F = 40 N`, `L = 80 mm`, `E = 69,000 N/mm²`, root moment `M = FL = 3,200 N mm`:
+
+```text
+Nominal bending stress:  σ = M(t/2)/I_weak = 10.00 MPa
+Tip deflection:          δ = FL³/(3 E I_weak) = 0.15459 mm
+```
+
+Using the **same simplified beam model at 3.6 mm**, `I_weak = 466.56 mm⁴`, giving `σ = 12.35 MPa` and `δ = 0.21206 mm`.
+
+| Thickness | Cantilever deflection | ANSYS R10 maximum total deformation | Nominal beam bending stress | ANSYS R10 peak von Mises |
+| :-- | --: | --: | --: | --: |
+| 4.0 mm | 0.15459 mm | 0.33623 mm (sweep) | 10.00 MPa | 23.337 MPa (sweep) |
+| 3.6 mm | 0.21206 mm | 0.46449 mm (refined) | 12.35 MPa | 29.873 MPa (refined) |
+
+The estimated ANSYS displacement is approximately **2.2 times** the simple-beam prediction at both thicknesses. This is a **plausibility and order-of-magnitude check, not independent validation of ANSYS**: the calculation treats the root as perfectly rigid and measures idealised beam-tip deflection, while ANSYS reports maximum total deformation of the full L-bracket. The stress values are also different quantities (nominal beam bending stress versus local peak von Mises stress) and should not be expected to match.
+
+A more representative analytical model would include flexure of the upright leg, the actual load transfer location and joint compliance. Physical measurements are still required to validate the model.
+
 ---
 
 ## 3. Result animations
