@@ -1,0 +1,35 @@
+
+# ANSYS temporary and solver files
+*.rst
+*.rth
+*.rdb
+*.full
+*.emat
+*.esav
+*.err
+*.out
+*.lock
+*.lck
+*.mechdb
+*.mechdat
+
+# ANSYS generated working directories
+*_files/
+*.wbpj_files/
+
+# SolidWorks backup and temporary files
+~$*
+*.SLDPRT.bak
+*.SLDASM.bak
+*.SLDDRW.bak
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Windows
+Thumbs.db
+desktop.ini

@@ -1,0 +1,4 @@
+Thickness (mm),Mesh Configuration,Nodes,Elements,Maximum Deformation (mm),Maximum von Mises Stress (MPa),Mass (kg),Notes
+3.6,Global 4 mm,,,0.46143,29.106,0.2686,Original DP12 sweep; node and element counts not captured
+3.6,Global 3 mm,62435,36306,0.46391,30.226,0.2686,Global mesh verification
+3.6,Global 3 mm + local R10 fillet 2 mm,69652,41018,0.464488,29.87317,0.2686,Refined output from current screenshot
